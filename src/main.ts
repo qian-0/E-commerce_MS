@@ -10,7 +10,7 @@ import '../src/assets/fonts/iconfont.css'
 
 Vue.config.productionTip = false
 //设置 axios 请求根路径
-axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/'
+axios.defaults.baseURL = 'http://www.ysqorz.top:8888/api/private/v1/'
 //设置 axios 请求拦截器 —— axios.interceptors.request
 axios.interceptors.request.use(config => {
   //为请求头添加 token 验证的 authorization 字段

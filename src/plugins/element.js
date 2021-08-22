@@ -1,7 +1,31 @@
 import Vue from 'vue'
 //按需导入 element 组件
-import { Button, Form, FormItem, Input, Message, Container, Header, Aside, Main, 
-    Menu, Submenu, MenuItem  } from 'element-ui'
+import {
+    Button,
+    Form,
+    FormItem,
+    Input,
+    Message,
+    Container,
+    Header,
+    Aside,
+    Main,
+    Menu,
+    Submenu,
+    MenuItem,
+    Breadcrumb,
+    BreadcrumbItem,
+    Card,
+    Row,
+    Col,
+    Table,
+    TableColumn,
+    Switch,
+    Tooltip,
+    Pagination,
+    Dialog,
+    MessageBox
+} from 'element-ui'
 
 
 //注册为全局可用组件
@@ -16,4 +40,17 @@ Vue.use(Main)
 Vue.use(Menu)
 Vue.use(Submenu)
 Vue.use(MenuItem)
-Vue.prototype.$message = Message      //Message 需要全局挂载到 Vue
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
+Vue.use(Card)
+Vue.use(Row)
+Vue.use(Col)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Switch)
+Vue.use(Tooltip)
+Vue.use(Pagination)
+Vue.use(Dialog)
+//以下需要全局挂载到 Vue
+Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm

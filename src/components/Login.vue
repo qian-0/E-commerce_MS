@@ -30,7 +30,6 @@
 
 <script>
 export default {
-  // name: "Login",
   data() {
     return {
       //表单数据对象

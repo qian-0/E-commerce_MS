@@ -17,12 +17,14 @@
           background-color="#333744"
           text-color="#fff"
           active-text-color="#409eff"
+          :default-active="activePath"
           :unique-opened="true"
           :collapse="isCollapse"
           :collapse-transition="false"
           :router="true"
         >
-        <!-- active-text-color 为选中的菜单项的颜色 -->
+        <!-- active-text-color: Menu组件属性，激活菜单的文字颜色 -->
+        <!-- default-active: Menu组件属性，激活菜单的 index-->
         <!-- unique-opened: Menu组件属性，是否只保持一个子菜单展开 -->
         <!-- collapse: Menu组件属性，是否水平折叠收起菜单 -->
         <!-- collapse-transition: Menu组件，是否开启折叠动画 -->
@@ -36,7 +38,7 @@
               <span>{{ item.authName }}</span>
             </template>
             <!-- el-menu-item 是二级菜单 -->
-            <el-menu-item :index="'/'+subItem.path" v-for="subItem in item.children" :key="subItem.id">
+            <el-menu-item :index="'/'+subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveNavState('/'+subItem.path)">
               <template slot="title">
                 <i class="el-icon-menu"></i>
                 <span>{{ subItem.authName }}</span>
@@ -55,7 +57,6 @@
 
 <script>
 export default {
-  // name:'Home',
   data() {
     return {
       //左侧菜单数据
@@ -69,12 +70,15 @@ export default {
         '145':'iconfont icon-baobiao'
       },
       //表示菜单是否水平折叠
-      isCollapse:false
+      isCollapse:false,
+      activePath:''
     }
   },
   //生命周期函数
   created() {
     this.getMenuList()
+    //设置 Menu 组件的属性 default-active 以激活被选中的菜单项
+    this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
     logout() {
@@ -89,6 +93,11 @@ export default {
     //切换菜单的折叠与展开
     toggleCollapse(){
       this.isCollapse = !this.isCollapse
+    },
+    //获取并保存当前二级菜单项的 index 值
+    saveNavState(activePath){
+      window.sessionStorage.setItem('activePath',activePath)
+      this.activePath = activePath
     }
   }
 }
