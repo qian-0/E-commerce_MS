@@ -2,6 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import App from './App.vue'
 import router from './router'
+//导入 element ui
 import './plugins/element.js'
 //导入全局样式表
 import '../src/assets/css/global.css'
@@ -18,7 +19,8 @@ axios.interceptors.request.use(config => {
   //必须 return config
   return config
 })
-Vue.prototype.$http = axios //Vue 挂载 axios
+//将 axios 挂载到 Vue
+Vue.prototype.$http = axios
 
 new Vue({
   router,

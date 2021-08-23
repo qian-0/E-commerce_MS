@@ -7,14 +7,13 @@
       </div>
       <!-- 登录表单 -->
       <el-form class="login_form" label-width="0px" :model="loginForm" :rules="loginFormRules" ref="loginFormRef">
-        <!--label-width 用于 item 中 label 属性的宽度 -->
-        <!-- :model 将表单的数据自动绑定到 loginForm 对象上 -->
-        <!-- :rules 绑定表单验证规则，loginFormRules 是一个对象 -->
-        <!-- ref 定义 表单实例对象 的引用，用以调用表单的方法 -->
+        <!-- label-width: 用于 item 中 label 文本的宽度 -->
+        <!-- model: 绑定表单的数据对象 loginForm -->
+        <!-- rules: 绑定表单验证规则 loginFormRules -->
+        <!-- ref: 定义 表单实例对象 的引用，用以调用表单的方法 -->
         <el-form-item prop="username">
-          <!-- prop 属性用于指定 username 这一条表单验证规则 -->
+          <!-- prop: 指定具体一条表单验证规则 -->
           <el-input prefix-icon="iconfont icon-user" v-model="loginForm.username"></el-input>
-          <!-- v-model 将输入数据与 loginForm 对象的属性双向绑定 -->
         </el-form-item>
         <el-form-item prop="password">
           <el-input type="password" prefix-icon="iconfont icon-3702mima" v-model="loginForm.password"></el-input>
@@ -53,24 +52,29 @@ export default {
   methods: {
     //重置表单
     resetLoginForm() {
-      //restFields() 为表单方法，将表单的所有字段重置为初始值
       this.$refs.loginFormRef.resetFields()
+      //restFields(): Form方法，将表单的所有字段重置为初始值
     },
-    //表单登陆前预验证
+    //登陆前表单预验证
     login() {
-      //validate(callback: Function(boolean, object)) 为表单方法，对整个表单进行验证。
-      //参数为一个回调函数，并传入两个参数:是否校验成功 'valid' 和未通过校验的字段
       this.$refs.loginFormRef.validate(async valid => {
-        if (!valid) return //预校验未通过
+        //validate(callback: Function(boolean, object)): 表单方法，调用验证规则对整个表单进行验证
+        //参数为一个回调函数，并传入两个参数:是否校验成功 'valid' 和未通过校验的字段
 
-        //发起 axios 登录请求，login 是请求相对路径，loginForm 是请求的参数
-        //请求返回 Promise 对象，使用 await 进行解析，而 await 只能用在 async 方法中
-        //解析后的数据为 axios 封装的数据，使用 解构赋值 提取有用信息
+        //预校验未通过
+        if (!valid) return
+
+        //预验证通过，发起 axios 登录请求
         const { data: res } = await this.$http.post('login', this.loginForm)
+        //第一个参数：请求相对路径；第二个参数：请求参数
+        //axios 返回 Promise 对象，使用 await 进行解析，而 await 只能用在 async 方法中
+        //解析后的数据为 axios 封装的数据，使用 {data:res} 解构赋值 提取有用信息
 
-        if (res.meta.status !== 200)
-          return this.$message.error('用户名或密码错误')
-        //将登录成功之后的 token 保存到客户端的 sessionStorage 中
+        //请求失败
+        if (res.meta.status !== 200) return this.$message.error('用户名或密码错误')
+
+        //请求成功
+        //将该用户的 token 保存到客户端的 sessionStorage 中
         window.sessionStorage.setItem('token', res.data.token)
         //跳转到后台主页 '/home'
         this.$router.push('/home')
@@ -80,9 +84,9 @@ export default {
 }
 </script>
 
-<!-- lang="less" 表示支持 less 语法格式 -->
-<!-- scoped：vue 指令，用以控制组件样式生效区间  scoped 表示只在当前组件生效 -->
 <style lang="less" scoped>
+//lang="less" 表示支持 less 语法格式
+//scoped：vue 指令，用以控制组件样式生效区间  scoped 表示只在当前组件生效
 .login_container {
   background-color: #2b4b6b;
   height: 100%;
@@ -118,15 +122,17 @@ export default {
     background-color: #eee;
   }
 }
+
 .login_form {
   position: absolute;
   bottom: 0;
   width: 100%;
   padding: 0 20px;
-  box-sizing: border-box; //box-sizing 定义如何计算一个元素的总宽度和高度
+  box-sizing: border-box; //box-sizing: 定义如何计算一个元素的总宽度和高度
 }
+
 .btns {
   display: flex;
-  justify-content: flex-end; //尾部对齐，justify-content 设置弹性盒子元素在主轴（横轴）方向上的对齐方式
+  justify-content: flex-end; //尾部对齐，justify-content: 设置弹性盒子元素在主轴（横轴）方向上的对齐方式
 }
 </style>

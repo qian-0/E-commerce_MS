@@ -1,6 +1,6 @@
 <template>
   <div>
-    Welcome
+    权限列表
   </div>
 </template>
 
