@@ -74,7 +74,7 @@
     <el-dialog title="添加用户" width="40%" :visible.sync="addDialogVisible" @close="$refs.addFormRef.resetFields()">
       <!-- visible.sync: 用以控制对话框的显示与隐藏 -->
       <!-- close:dialog: 事件，对话框关闭时触发 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
+      <el-form :model="addForm" :rules="FormRules" ref="addFormRef" label-width="70px">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="addForm.username"></el-input>
         </el-form-item>
@@ -96,7 +96,7 @@
 
     <!-- 修改用户的对话框 -->
     <el-dialog title="编辑用户" width="40%" :visible.sync="editDialogVisiable" @close="$refs.editFormRef.resetFields()">
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
+      <el-form :model="editForm" :rules="FormRules" ref="editFormRef" label-width="70px">
         <el-form-item label="用户名">
           <el-input v-model="editForm.username" disabled></el-input>
           <!-- disabled: 指定是否禁用输入 -->
@@ -155,17 +155,12 @@ export default {
     return {
       //获取用户列表的参数对象
       queryInfo: {
-        //查询输入
-        query: '',
-        //当前的页码数
-        pagenum: 1,
-        //当前每页显示多少条数据
-        pagesize: 10
-      },
-      //用户列表
-      userlist: [],
-      //查询到的用户数
-      total: 0,
+        query: '',      //查询输入
+        pagenum: 1,     //当前的页码数
+        pagesize: 10    //当前每页显示多少条数据
+      },  
+      userlist: [],     //用户列表
+      total: 0,         //查询到的用户数
       //对话框 的隐藏与否
       addDialogVisible: false,
       editDialogVisiable: false,
@@ -177,8 +172,9 @@ export default {
         email: '',
         mobile: ''
       },
-      //添加用户表单的验证规则对象
-      addFormRules: {
+      editForm: {},     //编辑用户的表单数据
+      //表单的验证规则对象
+      FormRules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { min: 3, max: 10, message: '用户名长度为 3-10 字符', trigger: 'blur' }
@@ -196,25 +192,9 @@ export default {
           { validator: checkMobile, trigger: 'blur' }
         ]
       },
-      //查询到的用户信息对象
-      editForm: {},
-      //编辑用户表单的验证规则对象
-      editFormRules: {
-        email: [
-          { required: true, message: '请输入邮箱', trigger: 'blur' },
-          { validator: checkEmail, trigger: 'blur' }
-        ],
-        mobile: [
-          { required: true, message: '请输入手机号', trigger: 'blur' },
-          { validator: checkMobile, trigger: 'blur' }
-        ]
-      },
-      //当前即将被分配角色的用户信息
-      userInfo: '',
-      //所有角色列表
-      rolesList: [],
-      //已选中的角色 id 值
-      selectedRoleId:''
+      userInfo: '',     //当前即将被分配角色的用户信息
+      rolesList: [],    //所有角色列表
+      selectedRoleId:''     //选择框已选中的角色 id 值
     }
   },
   created() {
@@ -247,13 +227,6 @@ export default {
       }
       this.$message.success('更新用户状态成功')
     },
-    //监听 对话框 关闭的事件
-    // addDialogClosed() {
-    //   this.$refs.addFormRef.resetFields()
-    // },
-    // editDialogClosed() {
-    //   this.$refs.editFormRef.resetFields()
-    // },
     //添加新用户，包括表单预验证
     addUser() {
       this.$refs.addFormRef.validate(async valid => {

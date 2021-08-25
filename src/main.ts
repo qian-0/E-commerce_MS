@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+import TreeTable from 'vue-table-with-tree-grid'
 import App from './App.vue'
 import router from './router'
 //导入 element ui
@@ -21,6 +22,8 @@ axios.interceptors.request.use(config => {
 })
 //将 axios 挂载到 Vue
 Vue.prototype.$http = axios
+//全局注册
+Vue.component('tree-table', TreeTable)
 
 new Vue({
   router,

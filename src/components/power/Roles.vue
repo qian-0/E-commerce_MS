@@ -53,7 +53,7 @@
     </el-card>
 
     <el-dialog title="添加角色" width="40%" :visible.sync="addDialogVisible" @close="$refs.addFormRef.resetFields()">
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="90px">
+      <el-form :model="addForm" :rules="FormRules" ref="addFormRef" label-width="90px">
         <el-form-item label="角色名" prop="roleName">
           <el-input v-model="addForm.roleName"></el-input>
         </el-form-item>
@@ -68,7 +68,7 @@
     </el-dialog>
 
     <el-dialog title="编辑角色" width="40%" :visible.sync="editDialogVisiable" @close="$refs.editFormRef.resetFields()">
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="90px">
+      <el-form :model="editForm" :rules="FormRules" ref="editFormRef" label-width="90px">
         <el-form-item label="角色名" prop="roleName">
           <el-input v-model="editForm.roleName"></el-input>
         </el-form-item>
@@ -101,18 +101,19 @@
 export default {
   data() {
     return {
-      //角色列表
-      rolesList: [],
+      rolesList: [],    //角色列表
       //对话框 隐藏与否
       addDialogVisible: false,
       editDialogVisiable: false,
+      setRightDialogVisible: false,
       //添加角色的表单数据
       addForm: {
         roleName: '',
         roleDesc: ''
       },
-      //添加角色表单的验证规则对象
-      addFormRules: {
+      editForm: {},     //编辑角色的表单数据
+      //表单的验证规则对象
+      FormRules: {
         roleName: [
           { required: true, message: '请输入角色名', trigger: 'blur' },
           { min: 2, max: 10, message: '角色长度为 2-10 字符', trigger: 'blur' }
@@ -121,33 +122,14 @@ export default {
           { max: 30, message: '角色描述长度至多 30 字符', trigger: 'blur' }
         ]
       },
-      //查询到的角色信息对象
-      editForm: {},
-      //编辑角色表单的验证规则对象
-      editFormRules: {
-        roleName: [
-          { required: true, message: '请输入角色名', trigger: 'blur' },
-          { min: 2, max: 10, message: '角色长度为 2-10 字符', trigger: 'blur' }
-        ],
-        roleDesc:[
-          { max: 30, message: '角色描述长度至多 30 字符', trigger: 'blur' }
-        ]
-      },
-      //分配权限对话框是否显示
-      setRightDialogVisible: false,
-      //所有权限
-      rightslist: [],
+      rightslist: [],   //所有权限列表
       //树形控件的属性绑定对象
       treeProps: {
-        //需要展示的属性
-        label: 'authName',
-        //实现父子关系的属性名
-        children: 'children'
+        label: 'authName',      //需要展示的属性
+        children: 'children'    //实现父子关系的属性名
       },
-      //默认选中的权限节点 key 数组
-      defKeys:[],
-      //当前即将分配角色权限的 id
-      roleId:''
+      defKeys:[],     //默认选中的权限节点 key 数组
+      roleId:''       //当前即将分配角色权限的 id
     }
   },
   created() {

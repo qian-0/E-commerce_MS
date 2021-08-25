@@ -27,8 +27,7 @@
 export default {
   data() {
     return {
-      //权限列表
-      rightsList: []
+      rightsList: []    //权限列表
     }
   },
   created() {
