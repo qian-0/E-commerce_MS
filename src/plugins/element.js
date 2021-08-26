@@ -2,7 +2,8 @@ import Vue from 'vue'
 //按需导入 element 组件
 import { Button, Form, FormItem, Input, Message, Container, Header, Aside, Main, Menu, Submenu,
   MenuItem, Breadcrumb, BreadcrumbItem, Card, Row, Col, Table, TableColumn, Switch, Tooltip,
-  Pagination, Dialog, MessageBox, Tag, Tree, Select, Option, Cascader } from 'element-ui'
+  Pagination, Dialog, MessageBox, Tag, Tree, Select, Option, Cascader, Alert, Tabs, TabPane,
+} from 'element-ui'
 
 //注册为全局可用组件
 Vue.use(Button)
@@ -32,7 +33,9 @@ Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Cascader)
-
+Vue.use(Alert)
+Vue.use(Tabs)
+Vue.use(TabPane)
 //以下需要全局挂载到 Vue
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
