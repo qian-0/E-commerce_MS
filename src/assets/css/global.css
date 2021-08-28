@@ -28,3 +28,11 @@ html, body, #app {
 .el-cascader-panel {
   height: 400px;
 }
+
+.el-steps{
+  margin: 15px 0px;
+}
+
+.ql-editor{
+  min-height: 300px;
+}

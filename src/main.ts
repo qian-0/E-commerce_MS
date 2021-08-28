@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import axios from 'axios'
 import TreeTable from 'vue-table-with-tree-grid'
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 import App from './App.vue'
 import router from './router'
 //导入 element ui
@@ -24,6 +28,18 @@ axios.interceptors.request.use(config => {
 Vue.prototype.$http = axios
 //全局注册
 Vue.component('tree-table', TreeTable)
+Vue.use(VueQuillEditor)
+//定义全局过滤器
+Vue.filter('dateFormat', (originVal: string | number | Date) => {
+  const dt = new Date(originVal)
+  const year = dt.getFullYear()
+  const month = (dt.getMonth() + 1 + '').padStart(2, '0')
+  const date = (dt.getDate() + '').padStart(2, '0')
+  const hour = (dt.getHours() + '').padStart(2, '0')
+  const minute = (dt.getMinutes() + '').padStart(2, '0')
+  const second = (dt.getSeconds() + '').padStart(2, '0')
+  return `${ year }-${ month }-${ date } ${ hour }:${ minute }:${ second }`
+})
 
 new Vue({
   router,
