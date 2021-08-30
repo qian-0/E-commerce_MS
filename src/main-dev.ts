@@ -17,7 +17,6 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 import 'nprogress/nprogress.css'
-import { config } from 'vue/types/umd'
 
 Vue.config.productionTip = false
 
